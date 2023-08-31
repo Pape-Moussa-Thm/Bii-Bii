@@ -1,0 +1,7 @@
+
+
+<div class="container mt-5" >
+    <app-formm (editArticleEvent)="updated($event)" (addArtVenteEvent)="addArticle($event)" [categories]="categories" [art]="art" [artConfect]="artConfect"></app-formm>
+    <app-lister [links]="links" (urll)="toPaginate($event)" [articles]="articles" (toForm)="editArticle($event)" (idToDel)="supArt($event)"></app-lister>
+</div>
+

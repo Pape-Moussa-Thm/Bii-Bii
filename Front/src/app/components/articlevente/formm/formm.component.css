@@ -1,0 +1,22 @@
+
+.suggestions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.suggestions div {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background-color: green;
+}
+
+.save:hover {
+    background-color: blue;
+}

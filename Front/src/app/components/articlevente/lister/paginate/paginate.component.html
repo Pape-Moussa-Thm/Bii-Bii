@@ -1,0 +1,6 @@
+
+<nav aria-label="Page navigation example" class="shadow-lg p-3 mb-5 bg-white rounded" style="margin-top: -2.98em; width: 70em;">
+    <ul class="pagination" style="margin-left: 24em;">
+        <li style="cursor: pointer;" *ngFor="let link of links" (click)="goToPage(link.url)" [class.active]="link.active" class="page-item"><button class="page-link" [innerHtml]="link.label"></button></li>
+    </ul>
+</nav>

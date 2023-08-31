@@ -1,0 +1,25 @@
+
+<div class="card mt-3">
+    <div class="card-header" style="background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);color: red;text-shadow: 2px 2px 8px blue">Liste des Articles</div>
+    <div class="card-body">
+        <table class="table">
+            <thead style="background: linear-gradient(110deg, #e3fd3b 0%, #badef7 90%);">
+                <tr>
+                    <th>Article</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                    <th>Categorie</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="app-item" [article]="article" (delete)="delete($event)" (updated)="update($event)"
+                    *ngFor="let article of articles.reverse() | paginate : { itemsPerPage : tableSize, currentPage : page, totalItems : count }; let i = index">
+                </tr>
+            </tbody>
+                <pagination-controls previouslabel="Previous" nextlabel="Next"
+                (pageChange)="onTableDataChange($event)"></pagination-controls>
+        </table>
+    </div>
+</div>
+

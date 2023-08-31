@@ -1,0 +1,66 @@
+.label-input-container {
+    margin-bottom: 1rem;
+}
+
+.autocomplete-container {
+    position: relative;
+}
+
+.suggestions {
+    position: absolute;
+    top: 150%;
+    left: 7em;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.suggestion {
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.suggestions div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background-color: rgb(128, 149, 149);
+}
+
+.select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 20em;
+}
+
+.selected {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.suggestion {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+}
+
+.hey:hover{
+    background-color: rgb(239, 32, 32);
+}
+
+.close {
+    cursor: pointer;
+    margin-left: 5px;
+}

@@ -1,0 +1,101 @@
+
+<div *ngIf="formErrorMessages.length > 0" style="margin-top: -3em; margin-left: 20em; width: 40em; height: 4em;" class="alert alert-danger">
+    <ul>
+        <li *ngFor="let errorMessage of formErrorMessages">{{ errorMessage }}</li>
+    </ul>
+</div>
+
+
+<div style="width: 80%; height: 60vh; background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);"
+    class="border border-2 mh-50 container p-3">
+    <div style="margin-top: 2em;">
+        <h3 style="color: red;text-shadow: 2px 2px 8px blue"><strong>ARTICLE</strong></h3>
+    </div>
+    <form [formGroup]="articleForm" (ngSubmit)="addOrEdit()" enctype="multipart/form-data">
+        <div style="margin-top: 1em; height: 41vh;" class="row border border-1 d-flex">
+            <div class="w-50 d-flex flex-column justify-content-center align-items-center">
+                <div class="w-100 d-flex justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 2em;" for="libelle">Libelle</label>
+                    <input (input)="changeLib()" style="width: 20em;" type="text" class="form-control" formControlName="libelle" required>
+                    <!-- <div *ngIf="articleForm?.get('libelle')?.hasError('required') && (articleForm?.get('libelle')?.touched ||articleForm?.get('libelle')?.dirty)">
+                        Le libelle est requis.
+                    </div>
+                    <div *ngIf="articleForm.get('libelle')?.hasError('pattern')">
+                        Le libellé ne doit contenir que des lettres.
+                    </div> -->
+                </div>
+                    <div class="w-100 d-flex justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 2em;" for="prix">Prix</label>
+                    <input style="width: 20em;"type="text" class="form-control" formControlName="prix" required>
+                    <!-- <div *ngIf="articleForm?.get('prix')?.hasError('required') && articleForm?.get('prix')?.touched">
+                        Le prix est requis.
+                    </div>
+                    <div *ngIf="articleForm.get('prix')?.hasError('pattern')">
+                        Le prix ne doit contenir que des chiffres.
+                    </div> -->
+                </div>
+                <div class="w-100 d-flex justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 2em;" for="stock">Stock</label>
+                    <input style="width: 20em;"type="text" class="form-control" formControlName="stock" required>
+                    <!-- <div *ngIf="articleForm?.get('stock')?.hasError('required') && articleForm?.get('stock')?.touched">
+                        Le stock est requis.
+                    </div>
+                    <div *ngIf="articleForm.get('stock')?.hasError('pattern')">
+                        Le stock ne doit contenir que des chiffres.
+                    </div> -->
+                </div>
+                <div class="w-100 d-flex justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 2em;" for="categorie">Categorie</label>
+                    <select style="width: 20em;" name="categorie" formControlName="categorie" class="form-select" required>
+                        <option value="">Choisir une catégorie</option>
+                        <option *ngFor="let categorie of categories" [ngValue]="categorie.libelle">{{categorie.libelle}}</option>
+                    </select>
+                    <!-- <div *ngIf="articleForm?.get('categorie')?.hasError('required') && articleForm?.get('categorie')?.touched">
+                        Le categorie est requis.
+                    </div> -->
+                </div>
+                <div class="select-container">
+                    <div class="selected" *ngIf="selectedFournisseurs.length > 0">
+                        <div *ngFor="let suggestion of selectedFournisseurs" class="suggestion hey">
+                            {{ suggestion }} <span class="close" (click)="deselectFournisseur(suggestion)">X</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="autocomplete-container w-100 d-flex justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 2em;" for="fournisseur">Fournisseur</label>
+                    <input style="width: 20em;" type="text" class="form-control" formControlName="fournisseurs"
+                    class="form-control">
+                    <div class="suggestions" *ngIf="suggestions.length > 0">
+                        <div *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+                            {{ suggestion.nomComplet }}
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="articleForm?.get('fournisseur')?.hasError('required') && articleForm?.get('fournisseur')?.touched">
+                        Le fournisseur est requis.
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="w-50">
+                <div style="width: 100%; margin-left: 5em; margin-top: 2em;">
+                    <label for="photo" style="cursor: pointer;">
+                        <img [src]="img" background-image="assets/image/demon_slayer.png"
+                            style="max-width: 100%; height: 10rem; border: 2px solid #ccc; padding: 15px; margin-bottom: 3.5rem;" />
+                    </label>
+                    <input type="file" id="photo" formControlName="photo" (change)="handleFileChange($event)" style="display: none;"
+                        required>
+                </div>
+                <div class="w-100 d-flex-column justify-content-between mt-2 align-items-center fw-bold">
+                    <label style="margin-left: 13em;" for="ref">REF</label>
+                    <input style="width: 20em; margin-left: 4em;" [value]="ref" type="text" class="form-control" formControlName="ref" readonly>
+                </div>
+            </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <button style="margin-top: 3em;" [disabled]="!articleForm.valid" type="submit" class="btn btn-success">{{ isEditing ? 'Update' : 'Ajouter' }}</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+

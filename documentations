@@ -1,0 +1,37 @@
+
+Concepts [
+
+** Module App
+
+** Directives
+   * Vues ( ngClasse, ... )
+   * Directives ( ngIf, ngFor, ngSwitch ... )
+  
+** Formulaires
+   * Templates driven form
+   * Reactive form
+   * Validation
+      * existants
+      * créer règles de validations
+      
+** Components
+   * Bindings
+       * Data Binding ( property, interpollation )
+       * two data binding | event binding
+   
+** Communication
+   * composant parent | enfant
+   * @viewchild | @viewchildren
+   
+** services rxjs ( observable | behavior subject | subject )
+        methodd rxjs ( pipe, map, subscribe )
+     
+** interface
+
+** pipes
+** lifecycle
+** reload component after load
+ 
+]
+
+

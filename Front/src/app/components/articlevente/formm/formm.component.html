@@ -1,0 +1,166 @@
+
+<div class="container" class="shadow-lg p-3 mb-5 bg-white rounded"
+    style="width: 70em;border: 5px solid #fff;padding-bottom: 10em; display: flex; justify-content: center; align-items: center; background: linear-gradient(110deg, #3baffd 0%, #badef7 90%); border-radius: 20px;">
+    <form [formGroup]="artVenteForm" (ngSubmit)="addOrEdit()">
+        <h2 style="text-shadow: 2px 2px 8px blue;color: red;">Ajouter un article de vente</h2>
+        <div class="row">
+            <div class="col" style="margin-left: 5em; margin-top: 2em;">
+                <div class="row">
+                    <div class="col">
+                        <label for="libelle" class="form-label">Libelle</label>
+                        <input placeholder="saisir un libelle" style="width: 12em; border: 2px solid;" type="text" class="form-control" id="libelle" formControlName="libelle"
+                            [class.is-valid]="artVenteForm.get('libelle')?.valid && (artVenteForm.get('libelle')?.touched || artVenteForm.get('libelle')?.dirty)"
+                            [class.is-invalid]="artVenteForm.get('libelle')?.invalid && (artVenteForm.get('libelle')?.touched || artVenteForm.get('libelle')?.dirty)"
+                            required (input)="libelleChange($event)" />
+                        <div class="text-danger"
+                            *ngIf="artVenteForm.get('libelle')?.hasError('required') && (artVenteForm.get('libelle')?.touched || artVenteForm.get('libelle')?.dirty)">
+                            Le libellé est requis.
+                        </div>
+                        <div class="text-danger" *ngIf="artVenteForm.get('libelle')?.hasError('pattern')">
+                            Le libellé doit commencer par une lettre.
+                        </div>
+                        <div *ngIf="!libs">
+                            Ce libellé existe déjà.
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label style="margin-left: 2em;" for="categorie" class="form-label">Catégorie</label>
+                        <select style="width: 12em; margin-left: 2em; height: 2.2em; border: 2px solid;" class="form-select" formControlName="categorie">
+                            <option value="">Sélectionner une catégorie</option>
+                            <option *ngFor="let categorie of categories" [ngValue]="categorie.libelle">{{categorie.libelle}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-top: 3em; margin-left: 2em;" class="col form-check">
+                        <input class="form-check-input" type="checkbox" id="promoCheckbox" formControlName="promo" />
+                        <label class="form-check-label" for="promoCheckbox">Promo</label>
+                    </div>
+                    <div *ngIf="artVenteForm.get('promo')?.value" class="col" style="margin-top: 1em; margin-left: -2em;">
+                        <label style="margin-left: 3em;" for="valeur" class="form-label">Valeur</label>
+                        <input placeholder="entrer une valeur" style="width: 12em; border: 2px solid; margin-left: 3em;" type="text"
+                            class="form-control" id="valeur" formControlName="valeur"
+                            [class.is-valid]="artVenteForm.get('valeur')?.valid && artVenteForm.get('valeur')?.dirty"
+                            [class.is-invalid]="artVenteForm.get('valeur')?.invalid && artVenteForm.get('valeur')?.dirty">
+                        <div class="invalid-feedback" *ngIf="artVenteForm.get('valeur')?.errors?.['onlyDigits']">
+                            La valeur doit contenir uniquement des chiffres.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="artVenteForm.get('valeur')?.errors?.['monChampValidation']">
+                            La valeur doit être supérieure à 5.
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 2em;">
+                    <div class="d-flex">
+                        <h2 style="text-shadow: 2px 2px 8px rgb(0, 13, 255);color: rgb(241, 241, 241);"> Articles de Confection </h2>
+                        <span (click)="addArticleConfection()" style="margin-left: 10em; margin-bottom: 0.5em; font-size: 1em; margin-left: 3em; cursor: pointer;" class="btn btn-primary btn-sm">+</span>
+                    </div>
+                    <table class="table table-bordered table-secondary border-dark" style="width: 10em;">
+                        <thead>
+                            <tr class="border">
+                                <th class="border">Libelle</th>
+                                <th class="border">Qte</th>
+                                <th class="border">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="shadow-lg p-3 mb-5 bg-white rounded" formArrayName="articlesConfection">
+                            <tr class="border" *ngFor="let item of articlesConfection.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <input placeholder="saisir un libelle" (input)="onLibInput($event, i)" style="width: 12em; border: 2px solid;"
+                                        type="text" class="form-control" formControlName="lib"
+                                        [class.is-valid]="getLibField(i)?.valid && (getLibField(i)?.touched || getLibField(i)?.dirty)"
+                                        [class.is-invalid]="getLibField(i)?.invalid && (getLibField(i)?.touched || getLibField(i)?.dirty)" required
+                                        pattern="[a-zA-Z][a-zA-Z0-9]*" />
+
+                                        <div class="suggestions" *ngIf="suggestions[i] && suggestions[i].length > 0">
+                                            <div *ngFor="let suggestion of suggestions[i]" (click)="insertSuggestion(i, suggestion)">
+                                                {{ suggestion.libelle }}
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="getLibField(i)?.hasError('required')">
+                                            Le champ est requis.
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="getLibField(i)?.hasError('pattern')">
+                                            Le libellé ne doit commencer qu'avec une lettre et peut contenir des lettres et des chiffres.
+                                        </div>
+                                </td>
+                                <td>
+                                    <input placeholder="entrer une quantité" style="width: 12em; border: 2px solid;" type="text" class="form-control"
+                                        formControlName="qte" required
+                                        [class.is-valid]="getQteField(i)?.valid && (getQteField(i)?.touched || getQteField(i)?.dirty)"
+                                        [class.is-invalid]="getQteField(i)?.invalid && (getQteField(i)?.touched || getQteField(i)?.dirty)" required
+                                        pattern="[0-9]*"/>
+                                        <div class="invalid-feedback" *ngIf="getQteField(i)?.hasError('required')">
+                                            Le champ est requis.
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="getQteField(i)?.hasError('pattern')">
+                                            La quantité ne doit contenir que des chiffres.
+                                        </div>
+                                </td>
+                                <td style="display: flex; justify-content: center; align-items: center;">
+                                    <button (click)="removeArticleConfection(i)" class="btn btn-danger btn-sm">X</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="articlesConfection.invalid && articlesConfection.errors?.['lignesNotEnough']" style="color: rgb(255, 0, 0); margin-top: 2em; margin-bottom: 2em;">
+                        fékhel bah matal trois (3) article de confection yii rk gua finalou
+                    </div>
+                    <div *ngIf="articlesConfection.invalid && articlesConfection.errors?.['invalidArt']"
+                        style="color: red; margin-top: 2em; margin-bottom: 2em;">
+                        Il doit y'avoir au minimum 1 tissu, 1 bouton et 1 fil.
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="margin-left: 4em; margin-top: 2em;">
+                <div class="col">
+                    <label for="photo" style="cursor: pointer;">
+                        <img [src]="img" style="max-width: 100%; height: 10rem; border: 2px solid #ccc; padding: 15px; margin-bottom: 3.5rem;" />
+                    </label>
+                    <input type="file" id="photo" formControlName="" (change)="handleFileChange($event)"
+                        style="display: none;" required>
+                </div>
+                <div class="col">
+                    <label style="margin-left: 7em;" for="ref">REF</label>
+                    <input [value]="ref" style="width: 17em; margin-left: 0em;" type="text" class="form-control" readonly />
+                </div>
+                <div class="col">
+                    <button style="margin-left: 4em; margin-top: 5em; font-size: large; width: 8em; height: 3em;" type="submit"
+                        class="btn btn-primary save float-end">{{ isEditing ? 'Update' : 'Ajouter' }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label style="margin-left: 3em;" for="coutFabrication" class="form-label">Coût de Fabrication</label>
+                <input style="width: 12em; margin-left: 2em; margin-bottom: 1em;" [value]="cout" readonly type="text" class="form-control" id="coutFabrication" />
+            </div>
+            <div style="margin-left: -30em;" class="col">
+                <label style="margin-left: 2em;" for="marge" class="form-label">Marge/Article</label>
+                <input placeholder="entrer une valeur" style="width: 12em; border: 2px solid; margin-left: 1em;" type="number"
+                    class="form-control" id="marge" formControlName="marge"
+                    [class.is-valid]="artVenteForm.get('marge')?.valid && (artVenteForm.get('marge')?.touched || artVenteForm.get('marge')?.dirty)"
+                    [class.is-invalid]="artVenteForm.get('marge')?.invalid && (artVenteForm.get('marge')?.touched || artVenteForm.get('marge')?.dirty)"
+                    required />
+                <div class="text-danger"
+                    *ngIf="artVenteForm.get('marge')?.invalid && (artVenteForm.get('marge')?.touched || artVenteForm.get('marge')?.dirty)">
+                    <ng-container *ngIf="artVenteForm.get('marge')?.errors?.['required']">
+                        La marge ne doit contenir que des chiffres.
+                    </ng-container>
+                    <ng-container *ngIf="artVenteForm.get('marge')?.errors?.['onlyDigits']">
+                        La marge ne doit contenir que des chiffres.
+                    </ng-container>
+                    <ng-container *ngIf="artVenteForm.get('marge')?.errors?.['min']">
+                        La marge doit être supérieure ou égale à 500.
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 1em;">
+            <label style="margin-top: 0em; margin-left: 5em;" for="prixVente" class="form-label">Prix de Vente</label>
+            <input [value]="pv" style="margin-bottom: 1em; width: 12em; margin-top: 2em; margin-left: -8em;" readonly type="text" class="form-control" id="prixVente" />
+        </div>
+
+    </form>
+</div>

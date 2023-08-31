@@ -1,0 +1,27 @@
+
+<div style="width: 70em;border: 5px solid #fff; margin-top: -2.97em; background: linear-gradient(110deg, #3baffd 0%, #badef7 90%); border-radius: 20px;" class="card mb-5" class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card-header">
+        <h2 class="card-title" style="text-shadow: 2px 2px 8px blue;color: red;">Articles de ventes</h2>
+    </div>
+    <div class="card-body">
+        <form>
+            <table class="table table-bordered">
+                <thead class="border table table-bordered table-secondary">
+                    <tr class="border">
+                        <th class="border">Libellé</th>
+                        <th class="border">QteStock</th>
+                        <th class="border">Article de Confection</th>
+                        <th class="border">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="border" id="selectionTableBody">
+                    <tr class="app-items border" [art]="art"(del)="deleting($event)" (updated)="update($event)"
+                       *ngFor="let art of articles.reverse()">
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+<app-paginate [links]="links" (url)="url($event)"></app-paginate>

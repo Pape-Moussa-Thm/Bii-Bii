@@ -1,0 +1,11 @@
+
+
+<div class="container mt-5">
+    <app-form (addArticleEvent)="addArticle($event)" (editArticleEvent)="updateArt($event)"  [categories]="categories" [fournisseurs]="fournisseurs"></app-form>
+    <app-list (idToDel)="supArt($event)" (toForm)="editArticle($event)" [articles]="articles"></app-list>
+    <!-- <app-pagination></app-pagination> -->
+</div>
+
+<!-- (editArticleEvent)="updateArt($event)" -->
+<!-- [article]="editedArticle" -->
+
