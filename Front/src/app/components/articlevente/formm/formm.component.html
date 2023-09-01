@@ -2,7 +2,7 @@
 <div class="container" class="shadow-lg p-3 mb-5 bg-white rounded"
     style="width: 70em;border: 5px solid #fff;padding-bottom: 10em; display: flex; justify-content: center; align-items: center; background: linear-gradient(110deg, #3baffd 0%, #badef7 90%); border-radius: 20px;">
     <form [formGroup]="artVenteForm" (ngSubmit)="addOrEdit()">
-        <h2 style="text-shadow: 2px 2px 8px blue;color: red;">Ajouter un article de vente</h2>
+        <h2 style="text-shadow: 2px 2px 8px rgb(255, 0, 0);color: rgb(255, 255, 255);">Add a sales item</h2>
         <div class="row">
             <div class="col" style="margin-left: 5em; margin-top: 2em;">
                 <div class="row">
@@ -52,10 +52,10 @@
                 </div>
                 <div class="row" style="margin-top: 2em;">
                     <div class="d-flex">
-                        <h2 style="text-shadow: 2px 2px 8px rgb(0, 13, 255);color: rgb(241, 241, 241);"> Articles de Confection </h2>
+                        <h2 style="text-shadow: 2px 2px 8px rgb(255, 0, 0);color: rgb(241, 241, 241);">add the crafting items</h2>
                         <span (click)="addArticleConfection()" style="margin-left: 10em; margin-bottom: 0.5em; font-size: 1em; margin-left: 3em; cursor: pointer;" class="btn btn-primary btn-sm">+</span>
                     </div>
-                    <table class="table table-bordered table-secondary border-dark" style="width: 10em;">
+                    <table class="table table-bordered table-dark border-dark" style="width: 10em;">
                         <thead>
                             <tr class="border">
                                 <th class="border">Libelle</th>
@@ -103,8 +103,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="articlesConfection.invalid && articlesConfection.errors?.['lignesNotEnough']" style="color: rgb(255, 0, 0); margin-top: 2em; margin-bottom: 2em;">
-                        fékhel bah matal trois (3) article de confection yii rk gua finalou
+                    <div *ngIf="articlesConfection.invalid && articlesConfection.errors?.['lignesNotEnough']" style="background:linear-gradient(110deg, #3bfd82 0%, #badef7 90%); margin-top: 2em; margin-bottom: 2em; color: #fff;border-radius: 10px; text-align: center;">
+                        fékhel bah matal <mark style="background: linear-gradient(110deg, #acd8f7 0%, #3bfd82 90%);;color: #ffffff;">au minimum trois (3) article de confection</mark> yii rk gua finalou ame sa model bou tok😉
                     </div>
                     <div *ngIf="articlesConfection.invalid && articlesConfection.errors?.['invalidArt']"
                         style="color: red; margin-top: 2em; margin-bottom: 2em;">
@@ -126,7 +126,7 @@
                 </div>
                 <div class="col">
                     <button style="margin-left: 4em; margin-top: 5em; font-size: large; width: 8em; height: 3em;" type="submit"
-                        class="btn btn-primary save float-end">{{ isEditing ? 'Update' : 'Ajouter' }}</button>
+                        class="btn btn-success save float-end">{{ isEditing ? 'Update' : 'Ajouter' }}</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,10 @@
 
-<td>{{art.libelle}}</td>
-<td>{{art.qteStock}}</td>
-<td>
+<td style="background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);">{{art.libelle}}</td>
+<td style="background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);">{{art.qteStock}}</td>
+<td style="background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);">
     <span *ngFor="let article of art.article">{{ article.libelle }}-{{ article.pivot?.qte }} ; </span>
 </td>
-<td>
+<td style="background: linear-gradient(110deg, #3baffd 0%, #badef7 90%);">
   <button (click)="update(art)" class="btn btn-outline-dark btn-lg mr-3">
     <i class="fa-solid fa-pen-to-square"></i>
 </button>
@@ -16,5 +16,5 @@
         <i class="fa-solid fa-trash"></i>
     </ng-container>
 </button>
-  
+
 </td>
